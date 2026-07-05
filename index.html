@@ -2,210 +2,437 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DIAGREIFIER - Intelligent Code Conversion Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>diagReifier · The Intelligent Bridge for Mobile Development</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.6;
-      color: #333;
-      max-width: 800px;
+      color: #1e2a3a;
+      max-width: 960px;
       margin: 2rem auto;
       padding: 0 1.5rem;
-      background-color: #fafafa;
+      background: #fafafa;
     }
+
     h1, h2, h3 {
-      color: #2c3e50;
+      color: #1e2a3a;
+      font-weight: 600;
+      letter-spacing: -0.01em;
     }
-    p, ul, ol {
-      margin-bottom: 1rem;
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 0.2rem;
+      border-left: 5px solid #3b82f6;
+      padding-left: 1rem;
     }
-    .tagline {
-      font-weight: 300;
-      color: #7f8c8d;
+
+    .subhead {
+      font-size: 1.15rem;
+      color: #3b82f6;
+      font-weight: 400;
+      margin-top: -0.2rem;
       margin-bottom: 2rem;
+      padding-left: 1.5rem;
     }
-    .section {
+
+    h2 {
+      font-size: 1.6rem;
+      margin-top: 2.4rem;
+      border-bottom: 1px solid #e9edf2;
+      padding-bottom: 0.4rem;
+    }
+
+    .version-badge {
+      display: inline-block;
+      background: #1e293b;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      letter-spacing: 0.02em;
+      margin-left: 0.6rem;
+    }
+
+    .platform-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin: 1.8rem 0;
+    }
+
+    .platform-card {
       background: white;
-      padding: 2rem;
-      margin: 2rem 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 18px;
+      padding: 1.6rem 2rem;
+      border: 1px solid #eef2f6;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-    .download-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    .download-card {
-      background: #f8f9fa;
-      padding: 1.5rem;
-      border-radius: 8px;
-      border-left: 4px solid #3498db;
-    }
-    .download-card h3 {
+
+    .platform-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
       margin-top: 0;
-      color: #2c3e50;
+      font-size: 1.3rem;
     }
-    .download-links {
-      margin-top: 1rem;
+
+    .platform-card h3 .pill {
+      font-size: 0.65rem;
+      font-weight: 600;
+      background: #dbeafe;
+      color: #1e4a7a;
+      padding: 0.15rem 0.7rem;
+      border-radius: 30px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
     }
-    .download-links a {
-      display: block;
-      padding: 0.5rem 0;
-      color: #3498db;
+
+    .pill.green {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .pill.yellow {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .pill.gray {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    .download-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.2rem;
+      margin: 0.8rem 0 0.2rem;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .download-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #f8fafc;
+      padding: 0.3rem 0.9rem 0.3rem 0.7rem;
+      border-radius: 40px;
+      border: 1px solid #e9edf2;
+      font-size: 0.9rem;
+    }
+
+    .download-list li .ext {
+      background: #e9edf2;
+      padding: 0.05rem 0.5rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #334155;
+      text-transform: uppercase;
+    }
+
+    .download-list li a {
+      color: #2563eb;
+      font-weight: 500;
       text-decoration: none;
     }
-    .download-links a:hover {
-      color: #2980b9;
+
+    .download-list li a:hover {
+      text-decoration: underline;
     }
-    .contact-section {
-      background: #2c3e50;
-      color: white;
-      padding: 2rem;
-      border-radius: 8px;
+
+    .soon-tag {
+      color: #94a3b8;
+      font-style: italic;
+      font-size: 0.85rem;
+    }
+
+    .note-box {
+      background: #f1f5f9;
+      padding: 1rem 1.8rem;
+      border-radius: 16px;
+      margin: 1.8rem 0 0.8rem;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .note-box strong {
+      color: #0b1e33;
+    }
+
+    footer {
+      margin-top: 3.5rem;
+      padding-top: 1.8rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+      color: #5b6f84;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .muted {
+      color: #5b6f84;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e2e8f0;
       margin: 2rem 0;
     }
-    .contact-section a {
-      color: #3498db;
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 1.2rem 1.5rem;
+      border-radius: 16px;
+      border: 1px solid #eef2f6;
+    }
+
+    .feature-card h4 {
+      margin: 0 0 0.4rem 0;
+      font-size: 1.1rem;
+      color: #1e2a3a;
+    }
+
+    .feature-card p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #3d4e62;
+    }
+
+    .pill-blue {
+      background: #dbeafe;
+      color: #1e4a7a;
+      padding: 0.15rem 0.7rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .download-cta {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      font-weight: 600;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      margin-left: 1.2rem;
+      transition: background 0.2s;
+      border: none;
       text-decoration: none;
     }
-    .contact-section a:hover {
-      color: #2980b9;
+
+    .download-cta:hover {
+      background: #1d4ed8;
+      text-decoration: none;
     }
-    footer {
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #eee;
-      font-size: 0.9rem;
-      color: #777;
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
     }
-  </style>
+
+    @media (max-width: 700px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      .download-cta {
+        margin-left: 0;
+        margin-top: 0.4rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>DIAGREIFIER - Expert #1 in Mobile Development</h1>
-  <p>© 2025 diagReifier - AI Code Conversion & Generation | Author by Rubain</p>
+  <!-- ===== EN-TÊTE AVEC CTA TÉLÉCHARGEMENT ===== -->
+  <div class="header-row">
+    <h1 style="margin-bottom: 0; border-left: 5px solid #3b82f6; padding-left: 1rem;">diagReifier</h1>
+    <a href="#download-section" class="download-cta">📥 Download the latest version</a>
+  </div>
+  <div class="subhead" style="margin-top: 0.2rem;">The Intelligent Bridge for Mobile Development</div>
 
-  <div class="section">
-    <h2>DOWNLOAD - Latest release (v1.0.0-beta.1)</h2>
-    
-    <div class="download-grid">
-      <div class="download-card">
-        <h3>Windows</h3>
-        <div class="download-links">
-          <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0-beta.1/diagReifier_windows_1.0.0-beta.1_x64_en-US.msi">.exe NSI (64-bit)</a>
-          <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0-beta.1/diagReifier_windows_1.0.0-beta.1_x86_en-US.msi">.exe NSI (32-bit)</a>
-          <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0-beta.1/_diagReifier_windows_1.0.0-beta.1_x64-setup.exe">.msi MSI (64-bit)</a>
-          <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0-beta.1/_diagReifier_windows_1.0.0-beta.1_x86-setup.exe">.msi MSI (32-bit)</a>
-        </div>
-      </div>
-      
-      <div class="download-card">
-        <h3>Linux (soon)</h3>
-        <div class="download-links">
-          <a href="#">AppImage (64-bit)</a>
-          <a href="#">DEB Package</a>
-          <a href="#">RPM Package</a>
-          <a href="#">Tarball</a>
-        </div>
-      </div>
-      
-      <div class="download-card">
-        <h3>macOS (soon)</h3>
-        <div class="download-links">
-          <a href="#">DMG (Intel)</a>
-          <a href="#">DMG (Apple Silicon)</a>
-          <a href="#">ZIP Archive</a>
-        </div>
-      </div>
+  <!-- ===== PRÉSENTATION ===== -->
+  <p style="font-size: 1.05rem;">
+    <strong>DIAGREIFIER</strong> is the answer. It is not merely a mobile development tool, but a revolutionary desktop platform powered by specialized AI; it captures the <strong>semantics</strong>, <strong>architecture</strong>, and <strong>context</strong> of your project to generate code of unmatched precision and quality.
+  </p>
+
+  <h2>🧬 Our DNA: AI Power at the Developer's Service</h2>
+  <p>
+    Born under the codename <strong>PCA-AIC</strong> (Project Catalyst Assisted by AI-Cloud), DIAGREIFIER embodies the next generation of development tools. It combines three cutting-edge technologies:
+  </p>
+  <ul style="padding-left: 1.5rem; margin-bottom: 1.8rem;">
+    <li><strong>Contextual AI:</strong> It doesn't just translate syntax. It analyzes your business logic, file architecture, and dependencies to generate code that makes sense.</li>
+    <li><strong>UI/UX Comprehension:</strong> Our AI interprets user interfaces to ensure a faithful conversion, whether you're moving from Android XML to SwiftUI, or from React Native JSX to Flutter's Dart.</li>
+    <li><strong>Cloud Power:</strong> A scalable cloud infrastructure that handles heavy project analysis and provides access to the most advanced AI models, all from your desktop application.</li>
+  </ul>
+
+  <h2>⚡ What We Do</h2>
+  
+  <h3 style="margin-bottom: 0.2rem;">1. Intelligent, Polyglot Code Conversion</h3>
+  <p style="margin-top: 0;">We break down the barriers between ecosystems. Our solution enables high-quality, bidirectional conversions:</p>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h4>🔄 Programming Language Conversion</h4>
+      <p>Java ⇄ Kotlin, Swift ⇄ Objective-C, JavaScript/TypeScript ⇄ Dart, and more (C++, etc.)</p>
     </div>
-    
-    <a href="https://github.com/diagreifier/diagreifier/releases/tag/1.0.0-beta.1">Github-Documentation | release (v1.0.0-beta.1)</a>
-    <div class="tagline">
-        <p><em>System Requirements (Recommend): Windows 10+, macOS 11+, or Linux Ubuntu 18+ • 4GB RAM minimum • Internet connection required for AI processing</em></p>
+    <div class="feature-card">
+      <h4>🎨 User Interface (UI) Conversion</h4>
+      <p>XML (Android) ⇄ SwiftUI (iOS) ⇄ JSX/TSX (React Native) ⇄ Dart (Flutter Widgets) ⇄ HarmonyOS</p>
+    </div>
+    <div class="feature-card">
+      <h4>🛠️ DevTools</h4>
+      <p>Developer Tools - Solve bugs, generate functions, debug errors, etc.</p>
     </div>
   </div>
 
-  <div class="section">
-    <h2>The Intelligent Bridge for Mobile Development</h2>
-    <p><strong>What if you could migrate your native Android app to iOS, or transform it into a Flutter project, not in months of work, but in a matter of hours?</strong></p>
-    
-    <p>Hello, I am Rubain, founder of <strong>DIAGREIFIER</strong>.</p>
-    
-    <p>Today, the fragmentation of mobile platforms is the single biggest challenge for developers and businesses. Creating and maintaining multiple codebases for Android, iOS, and cross-platform frameworks is a lengthy, costly, and error-prone process.</p>
-    
-    <p><strong>DIAGREIFIER is the answer.</strong> This is not a simple code translation tool; it is a <strong>revolutionary desktop platform, powered by a specialized AI</strong>, that understands the semantics, architecture, and context of your project to deliver code conversions of unparalleled accuracy and quality.</p>
+  <h3 style="margin-bottom: 0.2rem;">2. Accelerated Generation from Scratch</h3>
+  <p style="margin-top: 0;">Starting a new project? DIAGREIFIER gives you a head start.</p>
+  <ul style="padding-left: 1.5rem;">
+    <li>Migration of complete, well-architected projects for Android (Kotlin), iOS (Swift), Flutter, React Native and HarmonyOS</li>
+    <li>Generation of complex screens and UI components from descriptions or mockups</li>
+    <li>DevTools | Mobile Developer Tools - Solve bugs, generate functions, debug errors, etc.</li>
+  </ul>
+
+  <h2>🎯 Who Is DIAGREIFIER For?</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h4>🚀 Startups &amp; SMEs</h4>
+      <p>To launch your product on all platforms simultaneously, with a smaller team and a controlled budget.</p>
+    </div>
+    <div class="feature-card">
+      <h4>🏢 Enterprise Companies &amp; IT Consultants</h4>
+      <p>To modernize a portfolio of legacy applications, unify tech stacks, and accelerate development cycles.</p>
+    </div>
+    <div class="feature-card">
+      <h4>👨‍💻 Independent Developers &amp; Freelancers</h4>
+      <p>To expand your service offerings (e.g., create an iOS app from your Android expertise) without having to relearn everything.</p>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>Our DNA: AI Power at the Developer's Service</h2>
-    <p>Born under the codename <strong>PCA-AIC (Project Catalyst Assisted by AI-Cloud)</strong>, DIAGREIFIER embodies the next generation of development tools. It combines three cutting-edge technologies:</p>
-    
-    <ul>
-      <li><strong>Contextual AI:</strong> It doesn't just translate syntax. It analyzes your business logic, file architecture, and dependencies to generate code that <em>makes sense</em>.</li>
-      <li><strong>UI/UX Comprehension:</strong> Our AI interprets user interfaces to ensure a faithful conversion, whether you're moving from Android XML to SwiftUI, or from React Native JSX to Flutter's Dart.</li>
-      <li><strong>Cloud Power:</strong> A scalable cloud infrastructure that handles heavy project analysis and provides access to the most advanced AI models, all from your desktop application.</li>
-    </ul>
+  <h2>✅ The DIAGREIFIER Promise</h2>
+  <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0 2rem 0;">
+    <span style="background: #e6f7e6; padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500;">⏱ Save Precious Time</span>
+    <span style="background: #e6f7e6; padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500;">💰 Lower Costs</span>
+    <span style="background: #e6f7e6; padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500;">🧠 Eliminate Human Error</span>
+    <span style="background: #e6f7e6; padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500;">⚡ Be Agile &amp; Multipurpose</span>
   </div>
 
-  <div class="section">
-    <h2>What We Do</h2>
-    
-    <h3>1. Intelligent, Polyglot Code Conversion</h3>
-    <p>We break down the barriers between ecosystems. Our solution enables high-quality, bidirectional conversions:</p>
-    
-    <ul>
-      <li><strong>🔄 Programming Language Conversion:</strong><br>
-        Java ⇄ Kotlin, Swift ⇄ Objective-C, JavaScript/TypeScript ⇄ Dart, and more (C++, etc.)</li>
-      <li><strong>🎨 User Interface (UI) Conversion:</strong><br>
-        XML (Android) ⇄ SwiftUI (iOS) ⇄ JSX/TSX (React Native) ⇄ Dart (Flutter Widgets) ⇄ HarmonyOS<br>
-      </li>
-    </ul>
+  <hr>
 
-    <h3>2. Accelerated Generation from Scratch</h3>
-    <p>Starting a new project? DIAGREIFIER gives you a head start.</p>
-    
-    <ul>
-      <li><strong>Generation of complete, well-architected projects</strong> for Android (Kotlin), iOS (Swift), Flutter, and React Native</li>
-      <li><strong>Generation of complex screens and UI components</strong> from descriptions or mockups</li>
-    </ul>
+  <!-- ===== SECTION TÉLÉCHARGEMENT AVEC ID POUR ANCRAGE ===== -->
+  <h2 id="download-section" style="margin-top: 0;">📥 Download · Latest release</h2>
+
+  <div style="display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap;">
+    <span style="font-size: 1.4rem; font-weight: 600;">v1.0.0</span>
+    <span class="version-badge">Stable</span>
+    <span style="color: #5b6f84; font-size: 0.95rem;">Released July 5, 2026</span>
   </div>
 
-  <div class="section">
-    <h2>Who Is DIAGREIFIER For?</h2>
-    
-    <ul>
-      <li><strong>🚀 Startups & SMEs:</strong> To launch your product on all platforms simultaneously, with a smaller team and a controlled budget.</li>
-      <li><strong>🏢 Enterprise Companies & IT Consultants:</strong> To modernize a portfolio of legacy applications, unify tech stacks, and accelerate development cycles.</li>
-      <li><strong>👨‍💻 Independent Developers & Freelancers:</strong> To expand your service offerings (e.g., create an iOS app from your Android expertise) without having to relearn everything.</li>
-    </ul>
+  <p style="margin-top: 0.4rem; color: #2d3c4f;">
+    diagReifier is a desktop application (Windows, Linux/macOS soon) and Expert #1 in Mobile Development Tool. Choose your platform below. All installers include the full feature set — an active subscription is required after installation.
+  </p>
+
+  <!-- ===== PLATEFORMES ===== -->
+  <div class="platform-grid">
+    <div class="platform-card">
+      <h3>
+        🪟 Windows
+        <span class="pill green">Available</span>
+      </h3>
+      <ul class="download-list">
+        <li><span class="ext">.exe</span> <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_windows_1.0.0_x64-setup.exe">NSI (64-bit)</a></li>
+        <li><span class="ext">.exe</span> <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_windows_1.0.0_x86-setup.exe">NSI (32-bit)</a></li>
+        <li><span class="ext">.msi</span> <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_windows_1.0.0_x64_en-US.msi">MSI (64-bit)</a></li>
+        <li><span class="ext">.msi</span> <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_windows_1.0.0_x86_en-US.msi">MSI (32-bit)</a></li>
+      </ul>
+      <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #5b6f84;">
+        <span class="pill gray">NSI</span> Recommended for personal use &nbsp;·&nbsp; <span class="pill gray">MSI</span> For enterprise / custom deployment
+      </div>
+    </div>
+
+    <div class="platform-card">
+      <h3>
+        🐧 Linux
+        <span class="pill yellow">Coming soon</span>
+      </h3>
+      <ul class="download-list">
+        <li><span class="ext">.AppImage</span> <span class="soon-tag">(soon)</span></li>
+        <li><span class="ext">.deb</span> <span class="soon-tag">(soon)</span></li>
+        <li><span class="ext">.rpm</span> <span class="soon-tag">(soon)</span></li>
+        <li><span class="ext">.tar.gz</span> <span class="soon-tag">(soon)</span></li>
+      </ul>
+      <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #5b6f84;">
+        Native packages for Debian, Fedora, and universal AppImage.
+      </div>
+    </div>
+
+    <div class="platform-card">
+      <h3>
+        🍎 macOS
+        <span class="pill yellow">Coming soon</span>
+      </h3>
+      <ul class="download-list">
+        <li><span class="ext">.dmg</span> <span class="soon-tag">Intel (soon)</span></li>
+        <li><span class="ext">.dmg</span> <span class="soon-tag">Apple Silicon (soon)</span></li>
+        <li><span class="ext">.zip</span> <span class="soon-tag">(soon)</span></li>
+      </ul>
+      <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #5b6f84;">
+        Universal DMG for Intel and Apple Silicon; ZIP archive also available.
+      </div>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>The DIAGREIFIER Promise</h2>
-    
-    <ul>
-      <li><strong>Save Precious Time:</strong> Reduce weeks of development to just hours.</li>
-      <li><strong>Lower Costs:</strong> Optimize your team's resources and reduce technical debt.</li>
-      <li><strong>Eliminate Human Error:</strong> Consistent and reliable conversion, every time.</li>
-      <li><strong>Be Agile & Multipurpose:</strong> Adapt your mobile strategy in real-time, unblocked by a single technical stack.</li>
-    </ul>
+  <div class="note-box">
+    <strong>⚡ Need a different version?</strong><br />
+    All historical releases and nightly builds are available on our 
+    <a href="https://github.com/diagreifier/diagreifier/releases">GitHub Releases</a> page. For enterprise deployment, 
+    <a href="mailto:diagreifier@proton.me">contact us</a> for custom installers and volume licensing.
   </div>
 
-  <div class="contact-section">
-    <p>Ready to transform your development workflow? Have questions about DIAGREIFIER?</p>
-    <p><strong>Contact Us:</strong> <a href="mailto:diagreifier@proton.me">diagreifier@proton.me</a></p>
-    <p>We'd love to hear from you and discuss how DIAGREIFIER can accelerate your mobile development projects.</p>
-    <a href="https://diagreifier.github.io/privacy/">Privacy Policy</a>
+  <!-- ===== SYSTÈME ===== -->
+  <h2 style="margin-top: 2.8rem;">🛠 System Requirements</h2>
+  <div style="display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; background: white; padding: 1.2rem 1.8rem; border-radius: 16px; border: 1px solid #eef2f6;">
+    <div><strong>OS:</strong> Windows 10/11, macOS 11+, Linux (kernel 5.0+)</div>
+    <div><strong>RAM:</strong> 2 GB minimum (4 GB recommended)</div>
+    <div><strong>Storage:</strong> 100 MB free</div>
+    <div><strong>Display:</strong> 1280×720 or higher</div>
   </div>
 
+  <hr />
+
+  <!-- ===== FOOTER ===== -->
   <footer>
-    <p><strong>DIAGREIFIER.</strong> When your code speaks every language.</p>
-    <p>© 2025 diagReifier. All rights reserved. | Author by Rubain</p>
-    <p>This tool is designed for development assistance. Generated code may require manual review before production use.</p>
+    <p>
+      <strong>diagReifier</strong> · Author | Rubain K. · © 2026 diagReifier. All rights reserved.<br />
+      <span class="muted">This tool is designed for development assistance. Generated code may require manual review before production use.</span>
+    </p>
+    <p style="margin-top: 0.6rem;">
+      <a href="mailto:diagreifier@proton.me">diagreifier@proton.me</a> · 
+      <a href="https://diagreifier.github.io/privacy/">Privacy Policy</a> · 
+      <a href="https://github.com/diagreifier">GitHub</a>
+    </p>
   </footer>
 
 </body>
