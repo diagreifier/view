@@ -3,464 +3,1131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>diagReifier · AI Engineering platform for building, migrating and debugging mobile applications.</title>
+  <title>diagReifier · AI Engineering Platform for Mobile Development</title>
+  <meta name="description" content="diagReifier is an AI Engineering platform for building, migrating and debugging mobile applications. Android, iOS, Flutter, React Native & HarmonyOS." />
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/diagreifier/diagreifier/main/images/logo260x260.png" />
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.6;
-      color: #1e2a3a;
-      max-width: 960px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-      background: #fafafa;
+    :root {
+      --bg: #f7f9fc;
+      --surface: #ffffff;
+      --surface-alt: #f1f5f9;
+      --border: #e6ebf2;
+      --border-strong: #d6dee8;
+      --text: #0f1e2e;
+      --text-soft: #4a5b6e;
+      --text-muted: #7a8a9c;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --accent: #0ea5e9;
+      --success: #16a34a;
+      --success-soft: #dcfce7;
+      --warning: #d97706;
+      --warning-soft: #fef3c7;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 1px 2px rgba(15,30,46,0.04);
+      --shadow-md: 0 4px 16px rgba(15,30,46,0.06);
+      --shadow-lg: 0 12px 32px rgba(15,30,46,0.08);
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
     }
 
-    h1, h2, h3 {
-      color: #1e2a3a;
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ===== SVG ICON BASE ===== */
+    .svg-icon {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      vertical-align: -0.125em;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-logo-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 2px 6px rgba(37,99,235,0.25));
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--primary);
+      color: white !important;
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.88rem;
       font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+    }
+
+    .nav-cta:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 4.5rem 0 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(37,99,235,0.10), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero-logo {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      margin: 0 auto 1.5rem;
+      display: block;
+      filter: drop-shadow(0 8px 24px rgba(37,99,235,0.25));
+      animation: floatLogo 4s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.9rem 0.35rem 0.4rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 3px var(--success-soft);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0 0 1rem;
+      color: var(--text);
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-soft);
+      max-width: 680px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 6px 20px rgba(37,99,235,0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(37,99,235,0.35);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ===== SECTION ===== */
+    section { padding: 3.5rem 0; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 0.25rem 0.8rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.6rem;
+      color: var(--text);
+    }
+
+    .section-header p {
+      color: var(--text-soft);
+      font-size: 1.02rem;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* ===== FEATURE CARDS ===== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-strong);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
       letter-spacing: -0.01em;
     }
 
-    h1 {
-      font-size: 2.4rem;
-      margin-bottom: 0.2rem;
-      border-left: 5px solid #3b82f6;
-      padding-left: 1rem;
+    .feature-card p {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      margin: 0 0 0.8rem;
     }
 
-    .subhead {
-      font-size: 1.15rem;
-      color: #3b82f6;
-      font-weight: 400;
-      margin-top: -0.2rem;
-      margin-bottom: 2rem;
-      padding-left: 1.5rem;
+    .feature-card ul {
+      padding-left: 1.1rem;
+      margin: 0.6rem 0 0;
+      color: var(--text-soft);
+      font-size: 0.92rem;
     }
 
-    h2 {
-      font-size: 1.6rem;
-      margin-top: 2.4rem;
-      border-bottom: 1px solid #e9edf2;
-      padding-bottom: 0.4rem;
+    .feature-card ul li { margin-bottom: 0.3rem; }
+
+    /* ===== MIGRATION MATRIX ===== */
+    .migration-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
     }
 
-    .version-badge {
-      display: inline-block;
-      background: #1e293b;
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.2rem 1rem;
-      border-radius: 30px;
-      letter-spacing: 0.02em;
-      margin-left: 0.6rem;
+    .migration-item {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: background 0.2s;
     }
+
+    .migration-item:hover { background: var(--surface); }
+
+    .migration-item .arrow {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* ===== DOWNLOAD ===== */
+    .download-section {
+      background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .version-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .version-header .version {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--radius-pill);
+    }
+
+    .badge-stable { background: var(--success-soft); color: var(--success); }
+    .badge-soon { background: var(--warning-soft); color: var(--warning); }
+    .badge-available { background: var(--success-soft); color: var(--success); }
 
     .platform-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      margin: 1.8rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.2rem;
+      margin-top: 2rem;
     }
 
     .platform-card {
-      background: white;
-      border-radius: 18px;
-      padding: 1.6rem 2rem;
-      border: 1px solid #eef2f6;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .platform-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
     .platform-card h3 {
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      margin-top: 0;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .platform-card h3 .pill {
-      font-size: 0.65rem;
-      font-weight: 600;
-      background: #dbeafe;
-      color: #1e4a7a;
-      padding: 0.15rem 0.7rem;
-      border-radius: 30px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+    .os-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
     }
 
-    .pill.green {
-      background: #dcfce7;
-      color: #166534;
+    .os-icon .svg-icon {
+      width: 16px;
+      height: 16px;
     }
 
-    .pill.yellow {
-      background: #fef9c3;
-      color: #854d0e;
-    }
-
-    .pill.gray {
-      background: #f1f5f9;
-      color: #334155;
-    }
+    .os-icon.windows { color: #0078D6; background: #e6f2fb; }
+    .os-icon.linux   { color: #1f2937; background: #eef2f6; }
+    .os-icon.apple   { color: #1f2937; background: #f0f0f2; }
 
     .download-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem 1.2rem;
-      margin: 0.8rem 0 0.2rem;
-      padding-left: 0;
       list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     .download-list li {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      background: #f8fafc;
-      padding: 0.3rem 0.9rem 0.3rem 0.7rem;
-      border-radius: 40px;
-      border: 1px solid #e9edf2;
-      font-size: 0.9rem;
+      justify-content: space-between;
+      padding: 0.55rem 0.8rem;
+      background: var(--surface-alt);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      transition: background 0.15s;
     }
 
-    .download-list li .ext {
-      background: #e9edf2;
-      padding: 0.05rem 0.5rem;
-      border-radius: 30px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #334155;
-      text-transform: uppercase;
-    }
+    .download-list li:hover { background: #e8eef6; }
 
     .download-list li a {
-      color: #2563eb;
-      font-weight: 500;
+      color: var(--primary);
+      font-weight: 600;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
     }
 
-    .download-list li a:hover {
-      text-decoration: underline;
+    .download-list li a:hover { text-decoration: underline; }
+
+    .ext-badge {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      color: var(--text-soft);
     }
 
-    .soon-tag {
-      color: #94a3b8;
+    .soon-text {
+      color: var(--text-muted);
       font-style: italic;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
     }
 
-    .note-box {
-      background: #f1f5f9;
-      padding: 1rem 1.8rem;
-      border-radius: 16px;
-      margin: 1.8rem 0 0.8rem;
-      border-left: 4px solid #3b82f6;
+    .platform-note {
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
-    .note-box strong {
-      color: #0b1e33;
+    /* ===== INFO BOX ===== */
+    .info-box {
+      background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+      border: 1px solid var(--primary-soft);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.8rem;
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
     }
 
-    footer {
-      margin-top: 3.5rem;
-      padding-top: 1.8rem;
-      border-top: 1px solid #e2e8f0;
-      font-size: 0.9rem;
-      color: #5b6f84;
+    .info-box .icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
     }
 
-    a {
-      color: #2563eb;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .muted {
-      color: #5b6f84;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #e2e8f0;
-      margin: 2rem 0;
-    }
-    
-    .feature-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .feature-card {
-      background: white;
-      padding: 1.2rem 1.5rem;
-      border-radius: 16px;
-      border: 1px solid #eef2f6;
-    }
-
-    .feature-card h4 {
-      margin: 0 0 0.4rem 0;
-      font-size: 1.1rem;
-      color: #1e2a3a;
-    }
-
-    .feature-card p {
+    .info-box p {
       margin: 0;
-      font-size: 0.95rem;
-      color: #3d4e62;
+      font-size: 0.92rem;
+      color: var(--text-soft);
     }
 
-    .pill-blue {
-      background: #dbeafe;
-      color: #1e4a7a;
-      padding: 0.15rem 0.7rem;
-      border-radius: 30px;
-      font-size: 0.7rem;
-      font-weight: 600;
+    .info-box a { color: var(--primary); font-weight: 600; }
+
+    /* ===== SYSTEM REQ ===== */
+    .sysreq {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.8rem;
+    }
+
+    .sysreq-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .sysreq-item .label {
+      font-size: 0.75rem;
+      font-weight: 700;
       text-transform: uppercase;
-      display: inline-block;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
     }
 
-    .download-cta {
-      display: inline-block;
-      background: #2563eb;
-      color: white;
-      font-weight: 600;
-      padding: 0.4rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.95rem;
-      margin-left: 1.2rem;
-      transition: background 0.2s;
-      border: none;
-      text-decoration: none;
+    .sysreq-item .value {
+      font-size: 0.92rem;
+      color: var(--text);
+      font-weight: 500;
     }
 
-    .download-cta:hover {
-      background: #1d4ed8;
-      text-decoration: none;
+    /* ===== AUDIENCE ===== */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
     }
 
-    .header-row {
+    .audience-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .audience-card h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
+      gap: 0.5rem;
     }
 
-    @media (max-width: 700px) {
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-      .download-cta {
-        margin-left: 0;
-        margin-top: 0.4rem;
-      }
+    .audience-card p {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      margin: 0;
     }
+
+    /* ===== PROMISE ===== */
+    .promise-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .promise-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .promise-chip:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand p {
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      margin: 0.8rem 0 0;
+      max-width: 300px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin: 0 0 0.8rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-col a {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.15s;
+    }
+
+    .footer-col a:hover { color: var(--primary); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 860px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .navbar-inner { justify-content: space-between; }
+      .hero { padding: 3rem 0 2rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate { animation: fadeUp 0.6s ease-out both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
   </style>
 </head>
 <body>
 
-  <!-- ===== EN-TÊTE AVEC CTA TÉLÉCHARGEMENT ===== -->
-  <div class="header-row">
-    <h1 style="margin-bottom: 0; border-left: 5px solid #3b82f6; padding-left: 1rem;">diagReifier</h1>
-    <a href="#download-section" class="download-cta">📥 Download the latest version</a>
-  </div>
-  <div class="subhead" style="margin-top: 0.2rem;">AI Engineering Platform for Mobile Applications Development</div>
-          <span class="soon-tag">1- Build. 2- Migrate. 3- Debug</span>
-
-  <!-- ===== PRÉSENTATION ===== -->
-  <p style="font-size: 1.00rem;">
-    <strong>DIAGREIFIER</strong> is an <strong>AI Engineering</strong> platform for <strong>building</strong>, <strong>migrating</strong> and <strong>debugging</strong> mobile applications. It is not merely a mobile development tool, but a revolutionary <strong>desktop platform</strong> powered by specialized AI. Captures the semantics, architecture, and context of your project to generate code of unmatched precision and quality.
-  </p>
-
-  <!--
-    <div style="background: #f0f7ff; padding: 0.5rem 1.5rem; border-radius: 20px; margin-bottom: 2rem; border: 1px solid #dbeafe;">
-  <p style="font-size: 1.00rem;">
-    <strong>DIAGREIFIER</strong> is the answer. It is not merely a mobile development tool, but a revolutionary desktop platform powered by specialized AI; it captures the <strong>semantics</strong>, <strong>architecture</strong>, and <strong>context</strong> of your project to generate code of unmatched precision and quality.
-  </p>
-  </div>
-  -->
-  <h2>👨‍💻 Our DNA : AI Power at the Developer's Service</h2>
-
-      <a href="https://github.com/diagreifier">GitHub | About diagReifier</a>
-  <p>
-    Born under the codename <strong>PCA-AIC</strong> (Project Catalyst Assisted by AI-Cloud), DIAGREIFIER embodies the next generation of development tools. It combines three cutting-edge technologies:
-  </p>
-  <ul style="padding-left: 1.5rem; margin-bottom: 1.8rem;">
-    <li><strong>Contextual AI:</strong> It doesn't just translate syntax. It analyzes your business logic, file architecture, and dependencies to generate code that makes sense.</li>
-    <li><strong>UI/UX Comprehension:</strong> Our AI interprets user interfaces to ensure a faithful conversion, whether you're moving from Android XML to SwiftUI, or from React Native JSX to Flutter's Dart.</li>
-    <li><strong>Cloud Power:</strong> A scalable cloud infrastructure that handles heavy project analysis and provides access to the most advanced AI models, all from your desktop application.</li>
-  </ul>
-
-  <h2>⚡ What We Do ?</h2>
-  
-  <h3 style="margin-bottom: 0.2rem;">1. Intelligent, Polyglot Code Migration</h3>
-  <p style="margin-top: 0;">We break down the barriers between ecosystems. Our solution enables high-quality, bidirectional conversions:</p>
-  <div class="feature-grid">
-    <div class="feature-card">
-      <h4>🔄 Programming Language Migration</h4>
-      <p>Java ⇄ Kotlin, Swift ⇄ Objective-C, JavaScript/TypeScript ⇄ Dart, and more (C++, etc.)</p>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="brand">
+        <img
+          src="https://raw.githubusercontent.com/diagreifier/diagreifier/main/images/logo260x260.png"
+          alt="diagReifier logo"
+          class="brand-logo-img"
+        />
+        diagReifier
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#audience">Who it's for</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#requirements">Requirements</a></li>
+        <li>
+          <a href="#download" class="nav-cta">
+            <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v10.55l3.27-3.27 1.42 1.42L12 17.4l-4.69-4.7 1.42-1.42L12 13.55V3h0zM5 19h14v2H5z"/>
+            </svg>
+            Get diagReifier
+          </a>
+        </li>
+      </ul>
     </div>
-    <div class="feature-card">
-      <h4>🎨 User Interface (UI) Migration</h4>
-      <p>XML (Android) ⇄ SwiftUI (iOS) ⇄ JSX/TSX (React Native) ⇄ Dart (Flutter Widgets) ⇄ HarmonyOS</p>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="container">
+      <img
+        src="https://raw.githubusercontent.com/diagreifier/diagreifier/main/images/logo260x260.png"
+        alt="diagReifier"
+        class="hero-logo animate"
+      />
+      <div class="hero-badge animate delay-1">
+        <span class="dot"></span>
+        v1.0.0 · Stable release · September 22, 2026
+      </div>
+      <h1 class="animate delay-2">
+        Build · Migrate · Debug<br />
+        <span class="gradient">AI Engineering for Mobile Development</span>
+      </h1>
+      <p class="hero-sub animate delay-2">
+        diagReifier is a desktop AI platform that captures the semantics, architecture, and context of your project to build code of unmatched precision — across Android, iOS, Flutter, React Native &amp; HarmonyOS.
+      </p>
+      <div class="hero-actions animate delay-3">
+        <a href="#download" class="btn btn-primary">
+          <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v10.55l3.27-3.27 1.42 1.42L12 17.4l-4.69-4.7 1.42-1.42L12 13.55V3h0zM5 19h14v2H5z"/>
+          </svg>
+          Download for Windows
+        </a>
+        <a href="#features" class="btn btn-secondary">Explore features</a>
+      </div>
+      <div class="hero-meta animate delay-3">
+        <span>
+          <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+          Windows 10/11
+        </span>
+        <span>
+          <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          macOS · soon
+        </span>
+        <span>
+          <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.27 1.555.02.41.129.724.248.998.12.274.256.487.322.718.066.23.041.5-.132.86-.122.26-.313.55-.238.87.07.325.32.475.654.567.318.094.71.135 1.009.135.298 0 .573-.04.795-.121.222-.082.406-.207.504-.363.099-.157.113-.312.113-.47 0-.316-.132-.606-.269-.898-.136-.292-.317-.596-.317-.9 0-.302.136-.552.331-.761.196-.209.452-.356.72-.49.268-.135.549-.259.782-.415.233-.155.409-.362.499-.589.096-.238.062-.485.046-.746-.016-.26-.06-.53-.016-.823.045-.292.181-.604.36-.982.18-.377.409-.82.556-1.29.147-.47.211-.968.104-1.488-.146-.71-.523-1.343-1.046-1.954-.522-.61-1.188-1.208-1.763-1.75-.575-.544-1.06-1.033-1.298-1.507-.238-.474-.259-.935-.13-1.32.13-.386.406-.69.72-.885.313-.196.66-.277.929-.21.268.066.435.306.435.306s.146-.42.236-.842c.046-.21.06-.424.018-.616-.043-.192-.146-.36-.316-.47-.208-.132-.454-.117-.656-.06-.203.056-.367.155-.5.187-.132.033-.234.021-.234.021s-.058-.06-.07-.19c-.013-.132.006-.355.11-.618.104-.263.303-.573.489-.833.186-.26.365-.473.47-.63.106-.157.126-.238.105-.29-.02-.05-.086-.063-.207-.05-.12.014-.293.072-.484.161-.191.09-.41.214-.615.375-.205.162-.41.36-.56.602-.15.243-.245.53-.235.844.01.315.122.66.235.964.113.305.23.573.24.79.01.218-.057.372-.146.51-.088.136-.22.263-.372.38-.152.116-.324.223-.5.32-.176.095-.352.178-.51.25-.157.07-.298.126-.4.17-.103.043-.166.075-.187.096-.043.045-.032.05.05.02.083-.032.24-.108.44-.19.2-.083.44-.17.664-.21.224-.042.43-.038.578.02.147.057.234.176.24.335.006.158-.062.353-.166.55-.104.198-.242.394-.37.573-.13.18-.252.34-.348.484-.096.144-.168.27-.198.372-.03.102-.02.176.02.21.04.034.11.028.19-.008.08-.035.173-.09.26-.15.088-.06.16-.12.21-.165"/>
+          </svg>
+          Linux · soon
+        </span>
+      </div>
     </div>
-  </div>
+  </header>
 
+  <!-- ===== DNA / INTRO ===== -->
+  <section id="dna">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Our DNA</span>
+        <h2>AI power at the developer's service</h2>
+        <p>Born under the codename <strong>PCA-AIC</strong> (Project Catalyst Assisted by AI-Cloud), diagReifier embodies the next generation of development tools.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3>Contextual AI</h3>
+          <p>It doesn't just translate syntax. It analyzes your business logic, file architecture, and dependencies to generate code that makes sense.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>UI/UX Comprehension</h3>
+          <p>Our AI interprets user interfaces to ensure faithful migration — from Android XML to SwiftUI, or React Native JSX to Flutter Dart.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">☁️</div>
+          <h3>Cloud Power</h3>
+          <p>A scalable cloud infrastructure that handles heavy project analysis and provides access to the most advanced AI models, from your desktop app.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <h3 style="margin-bottom: 0.2rem;">2. Accelerated Generation from Scratch</h3>
-  <p style="margin-top: 0;">Reifier new interface (UI) or build new complet project</p>
-  <div class="feature-grid">
-    <div class="feature-card">
-      
-      <h4>🚀 Starting a new project? DIAGREIFIER gives you a head start.</h4>
-  <!--<p style="margin-top: 0;"></p>-->
-          <ul style="padding-left: 1.5rem;">
-          <li>Generation of complete, well-architected projects for Android (Kotlin), iOS (Swift), Flutter, React Native and HarmonyOS</li>
-          <li>Generation of complex screens and UI components from descriptions or mockups</li>
+  <!-- ===== FEATURES ===== -->
+  <section id="features" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">What we do</span>
+        <h2>Three pillars, one platform</h2>
+        <p>From intelligent migration to accelerated generation and developer tooling — diagReifier covers the full mobile development lifecycle.</p>
+      </div>
+
+      <!-- 1. Migration -->
+      <div class="feature-card" style="margin-bottom: 1.4rem;">
+        <div class="feature-icon">🔄</div>
+        <h3>1 · Intelligent, Polyglot Code Migration</h3>
+        <p>We break down the barriers between ecosystems. High-quality, bidirectional conversions:</p>
+        <div class="migration-grid">
+          <div class="migration-item"><span>Java</span><span class="arrow">⇄</span><span>Kotlin</span></div>
+          <div class="migration-item"><span>Swift</span><span class="arrow">⇄</span><span>Objective-C</span></div>
+          <div class="migration-item"><span>JavaScript / TypeScript</span><span class="arrow">⇄</span><span>Dart</span></div>
+          <div class="migration-item"><span>XML (Android)</span><span class="arrow">⇄</span><span>SwiftUI (iOS)</span></div>
+          <div class="migration-item"><span>JSX / TSX</span><span class="arrow">⇄</span><span>Flutter Widgets</span></div>
+          <div class="migration-item"><span>HarmonyOS</span><span class="arrow">⇄</span><span>All ecosystems</span></div>
+        </div>
+      </div>
+
+      <!-- 2. Generation -->
+      <div class="feature-card" style="margin-bottom: 1.4rem;">
+        <div class="feature-icon">🚀</div>
+        <h3>2 · Accelerated Creation from Scratch</h3>
+        <p>Reify a new interface or build a complete project. Starting fresh? diagReifier gives you a head start.</p>
+        <ul>
+          <li>Creation of complete, well-architected projects for Android (Kotlin), iOS (Swift), Flutter, React Native and HarmonyOS</li>
+          <li>Design of complex screens and UI components from descriptions or mockups</li>
         </ul>
-    </div>
-  </div>
+      </div>
 
-
-  <h3 style="margin-bottom: 0.2rem;">3. DevTools an original tool for developers</h3>
-  <p style="margin-top: 0;">Developer Tools (Support, assistance, start of the project to its completion)</p>
-  <div class="feature-grid">
-    <div class="feature-card">
-      
-      <h4>🛠️ Developer Tools - Solve bugs, generate functions, debug errors, performance, etc.</h4>
-  <!--<p style="margin-top: 0;"></p>-->
-  <ul style="padding-left: 1.5rem;">
-    <li>This tool provides tailored assistance.</li>
-    <li>It solves complex problems, generates functions, fixes bugs, and supports the developer from the start of the project to its completion.</li>
-  </ul>
-    </div>
-  </div>
-
-  <h2>🎯 Who Is DIAGREIFIER For?</h2>
-  <div class="feature-grid">
-    <div class="feature-card">
-      <h4>🚀 Startups &amp; SMEs</h4>
-      <p>To launch your product on all platforms simultaneously, with a smaller team and a controlled budget.</p>
-    </div>
-    <div class="feature-card">
-      <h4>🏢 Enterprise Companies &amp; IT Consultants</h4>
-      <p>To modernize a portfolio of legacy applications, unify tech stacks, and accelerate development cycles.</p>
-    </div>
-    <div class="feature-card">
-      <h4>👨‍💻 Independent Developers &amp; Freelancers</h4>
-      <p>To expand your service offerings (e.g., create an iOS app from your Android expertise) without having to relearn everything.</p>
-    </div>
-  </div>
-
-  <h2>✅ The DIAGREIFIER Promise</h2>
-  <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0 2rem 0;">
-    <span style="background: #e6f7e6; padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500;">⏱ Save Precious Time</span>
-    <span style="background: #e6f7e6; padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500;">💰 Lower Costs</span>
-    <span style="background: #e6f7e6; padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500;">🧠 Eliminate Human Error</span>
-    <span style="background: #e6f7e6; padding: 0.4rem 1.2rem; border-radius: 40px; font-weight: 500;">⚡ Be Agile &amp; Multipurpose</span>
-  </div>
-
-  <hr>
-
-  <!-- ===== SECTION TÉLÉCHARGEMENT AVEC ID POUR ANCRAGE ===== -->
-  <h2 id="download-section" style="margin-top: 0;">📥 Download · Latest release</h2>
-
-  <div style="display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap;">
-    <span style="font-size: 1.4rem; font-weight: 600;">diagReifier v1.0.0</span>
-    <span class="version-badge">Stable</span>
-    <span style="color: #5b6f84; font-size: 0.95rem;">Released September 5, 2026</span>
-  </div>
-
-  <p style="margin-top: 0.4rem; color: #2d3c4f;">
-    diagReifier (desktop App) is an AI Engineering Platform for Mobile Applications (Android, iOS, Flutter, React Native & HarmonyOS) and Expert #1 in Mobile Development Tool. Choose your platform below. All installers include the full feature set — an active subscription is required after installation.
-  </p>
-
-  <!-- ===== PLATEFORMES ===== -->
-  <div class="platform-grid">
-    <div class="platform-card">
-      <h3>
-        🪟 Windows
-        <span class="pill green">Available</span>
-      </h3>
-      <ul class="download-list">
-        <li><span class="ext">.exe</span> <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_1.0.0_x64-setup.exe">NSI (64-bit)</a></li>
-        <li><span class="ext">.exe</span> <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_1.0.0_x86-setup.exe">NSI (32-bit)</a></li>
-        <li><span class="ext">.msi</span> <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_1.0.0_x64_en-US.msi">MSI (64-bit)</a></li>
-        <li><span class="ext">.msi</span> <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_1.0.0_x86_en-US.msi">MSI (32-bit)</a></li>
-      </ul>
-      <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #5b6f84;">
-        <span class="pill gray">NSI</span> Recommended for professional use &nbsp;·&nbsp; <span class="pill gray">MSI</span> For enterprise / custom deployment (contact us)
+      <!-- 3. DevTools -->
+      <div class="feature-card">
+        <div class="feature-icon">🛠️</div>
+        <h3>3 · DevTools — An Original Tool for Developers</h3>
+        <p>Solve bugs, generate functions, debug errors, optimize performance. Tailored assistance from project start to completion.</p>
+        <ul>
+          <li>Provides tailored, context-aware assistance</li>
+          <li>Solves complex problems, generates functions, fixes bugs</li>
+          <li>Supports the developer across the entire project lifecycle</li>
+        </ul>
       </div>
     </div>
+  </section>
 
-    <div class="platform-card">
-      <h3>
-        🐧 Linux
-        <span class="pill yellow">Coming soon</span>
-      </h3>
-      <ul class="download-list">
-        <li><span class="ext">.AppImage</span> <span class="soon-tag">(soon)</span></li>
-        <li><span class="ext">.deb</span> <span class="soon-tag">(soon)</span></li>
-        <li><span class="ext">.rpm</span> <span class="soon-tag">(soon)</span></li>
-        <li><span class="ext">.tar.gz</span> <span class="soon-tag">(soon)</span></li>
-      </ul>
-      <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #5b6f84;">
-        Native packages for Debian, Fedora, and universal AppImage.
+  <!-- ===== AUDIENCE ===== -->
+  <section id="audience">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Who it's for</span>
+        <h2>Built for every mobile team</h2>
+      </div>
+      <div class="audience-grid">
+        <div class="audience-card">
+          <h4>🚀 Startups &amp; SMEs</h4>
+          <p>Launch your product on all platforms simultaneously, with a smaller team and a controlled budget.</p>
+        </div>
+        <div class="audience-card">
+          <h4>🏢 Enterprise &amp; IT Consultants</h4>
+          <p>Modernize a portfolio of legacy applications, unify tech stacks, and accelerate development cycles.</p>
+        </div>
+        <div class="audience-card">
+          <h4>👨‍💻 Independent Developers</h4>
+          <p>Expand your service offerings — create an iOS app from your Android expertise without relearning everything.</p>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top: 3rem; margin-bottom: 0;">
+        <span class="section-label">The diagReifier promise</span>
+        <h2>What you get</h2>
+      </div>
+      <div class="promise-row">
+        <span class="promise-chip">⏱ Save precious time</span>
+        <span class="promise-chip">💰 Lower costs</span>
+        <span class="promise-chip">🧠 Eliminate human error</span>
+        <span class="promise-chip">⚡ Be agile &amp; multipurpose</span>
       </div>
     </div>
+  </section>
 
-    <div class="platform-card">
-      <h3>
-        🍎 macOS
-        <span class="pill yellow">Coming soon</span>
-      </h3>
-      <ul class="download-list">
-        <li><span class="ext">.dmg</span> <span class="soon-tag">Intel (soon)</span></li>
-        <li><span class="ext">.dmg</span> <span class="soon-tag">Apple Silicon (soon)</span></li>
-        <li><span class="ext">.zip</span> <span class="soon-tag">(soon)</span></li>
-      </ul>
-      <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #5b6f84;">
-        Universal DMG for Intel and Apple Silicon; ZIP archive also available.
+  <!-- ===== DOWNLOAD ===== -->
+  <section id="download" class="download-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">📥 Download</span>
+        <h2>Latest release</h2>
+        <div class="version-header">
+          <span class="version">diagReifier v1.0.0</span>
+          <span class="badge badge-stable">Stable</span>
+          <span style="color: var(--text-muted); font-size: 0.9rem;">Released September 22, 2026</span>
+        </div>
+        <p>Choose your platform below. All installers include the full feature set — an active subscription is required after installation.</p>
+      </div>
+
+      <div class="platform-grid">
+        <!-- Windows -->
+        <div class="platform-card">
+          <h3>
+            <span class="os-icon windows">
+              <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+              </svg>
+            </span>
+            Windows
+            <span class="badge badge-available" style="margin-left: auto;">Available</span>
+          </h3>
+          <ul class="download-list">
+            <li>
+              <span><span class="ext-badge">.exe</span> NSIS (64-bit)</span>
+              <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_1.0.0_x64-setup.exe">Download ↓</a>
+            </li>
+            <li>
+              <span><span class="ext-badge">.exe</span> NSIS (32-bit)</span>
+              <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_1.0.0_x86-setup.exe">Download ↓</a>
+            </li>
+            <li>
+              <span><span class="ext-badge">.msi</span> MSI (64-bit)</span>
+              <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_1.0.0_x64_en-US.msi">Download ↓</a>
+            </li>
+            <li>
+              <span><span class="ext-badge">.msi</span> MSI (32-bit)</span>
+              <a href="https://github.com/diagreifier/diagreifier/releases/download/1.0.0/diagReifier_1.0.0_x86_en-US.msi">Download ↓</a>
+            </li>
+          </ul>
+          <p class="platform-note">
+            <strong>NSIS</strong> recommended for professional use · <strong>MSI</strong> for enterprise / custom deployment (contact us)
+          </p>
+        </div>
+
+        <!-- Linux -->
+        <div class="platform-card">
+          <h3>
+            <span class="os-icon linux">
+              <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.27 1.555.02.41.129.724.248.998.12.274.256.487.322.718.066.23.041.5-.132.86-.122.26-.313.55-.238.87.07.325.32.475.654.567.318.094.71.135 1.009.135.298 0 .573-.04.795-.121.222-.082.406-.207.504-.363.099-.157.113-.312.113-.47 0-.316-.132-.606-.269-.898-.136-.292-.317-.596-.317-.9 0-.302.136-.552.331-.761.196-.209.452-.356.72-.49.268-.135.549-.259.782-.415.233-.155.409-.362.499-.589.096-.238.062-.485.046-.746-.016-.26-.06-.53-.016-.823.045-.292.181-.604.36-.982.18-.377.409-.82.556-1.29.147-.47.211-.968.104-1.488-.146-.71-.523-1.343-1.046-1.954-.522-.61-1.188-1.208-1.763-1.75-.575-.544-1.06-1.033-1.298-1.507-.238-.474-.259-.935-.13-1.32.13-.386.406-.69.72-.885.313-.196.66-.277.929-.21.268.066.435.306.435.306s.146-.42.236-.842c.046-.21.06-.424.018-.616-.043-.192-.146-.36-.316-.47-.208-.132-.454-.117-.656-.06-.203.056-.367.155-.5.187-.132.033-.234.021-.234.021s-.058-.06-.07-.19c-.013-.132.006-.355.11-.618.104-.263.303-.573.489-.833.186-.26.365-.473.47-.63.106-.157.126-.238.105-.29-.02-.05-.086-.063-.207-.05-.12.014-.293.072-.484.161-.191.09-.41.214-.615.375-.205.162-.41.36-.56.602-.15.243-.245.53-.235.844.01.315.122.66.235.964.113.305.23.573.24.79.01.218-.057.372-.146.51-.088.136-.22.263-.372.38-.152.116-.324.223-.5.32-.176.095-.352.178-.51.25-.157.07-.298.126-.4.17-.103.043-.166.075-.187.096-.043.045-.032.05.05.02.083-.032.24-.108.44-.19.2-.083.44-.17.664-.21.224-.042.43-.038.578.02.147.057.234.176.24.335.006.158-.062.353-.166.55-.104.198-.242.394-.37.573-.13.18-.252.34-.348.484-.096.144-.168.27-.198.372-.03.102-.02.176.02.21.04.034.11.028.19-.008.08-.035.173-.09.26-.15.088-.06.16-.12.21-.165"/>
+              </svg>
+            </span>
+            Linux
+            <span class="badge badge-soon" style="margin-left: auto;">Coming soon</span>
+          </h3>
+          <ul class="download-list">
+            <li><span><span class="ext-badge">.AppImage</span> Universal</span><span class="soon-text">soon</span></li>
+            <li><span><span class="ext-badge">.deb</span> Debian / Ubuntu</span><span class="soon-text">soon</span></li>
+            <li><span><span class="ext-badge">.rpm</span> Fedora / RHEL</span><span class="soon-text">soon</span></li>
+            <li><span><span class="ext-badge">.tar.gz</span> Archive</span><span class="soon-text">soon</span></li>
+          </ul>
+          <p class="platform-note">Native packages for Debian, Fedora, and universal AppImage.</p>
+        </div>
+
+        <!-- macOS -->
+        <div class="platform-card">
+          <h3>
+            <span class="os-icon apple">
+              <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+            </span>
+            macOS
+            <span class="badge badge-soon" style="margin-left: auto;">Coming soon</span>
+          </h3>
+          <ul class="download-list">
+            <li><span><span class="ext-badge">.dmg</span> Intel</span><span class="soon-text">soon</span></li>
+            <li><span><span class="ext-badge">.dmg</span> Apple Silicon</span><span class="soon-text">soon</span></li>
+            <li><span><span class="ext-badge">.zip</span> Archive</span><span class="soon-text">soon</span></li>
+          </ul>
+          <p class="platform-note">Universal DMG for Intel and Apple Silicon; ZIP archive also available.</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <span class="icon">⚡</span>
+        <p>
+          <strong>Need a different version?</strong> All historical releases and nightly builds are available on our
+          <a href="https://github.com/diagreifier/diagreifier/releases">GitHub Releases</a> page. For enterprise deployment,
+          <a href="mailto:diagreifier@proton.me">contact us</a> for custom installers and volume licensing.
+        </p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="note-box">
-    <strong>⚡ Need a different version?</strong><br />
-    All historical releases and nightly builds are available on our 
-    <a href="https://github.com/diagreifier/diagreifier/releases">GitHub Releases</a> page. For enterprise deployment, 
-    <a href="mailto:diagreifier@proton.me">contact us</a> for custom installers and volume licensing.
-  </div>
-
-  <!-- ===== SYSTÈME ===== -->
-  <h2 style="margin-top: 2.8rem;">🛠 System Requirements</h2>
-  <div style="display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; background: white; padding: 1.2rem 1.8rem; border-radius: 16px; border: 1px solid #eef2f6;">
-    <div><strong>OS:</strong> Windows 10/11, macOS 11+, Linux (kernel 5.0+)</div>
-    <div><strong>RAM:</strong> 2 GB minimum (4 GB recommended)</div>
-    <div><strong>Storage:</strong> 100 MB free</div>
-    <div><strong>Display:</strong> 1280×720 or higher</div>
-  </div>
-
-  <hr />
+  <!-- ===== REQUIREMENTS ===== -->
+  <section id="requirements">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">🛠 System</span>
+        <h2>System requirements</h2>
+      </div>
+      <div class="sysreq">
+        <div class="sysreq-item">
+          <span class="label">OS</span>
+          <span class="value">Windows 10/11, macOS 11+, Linux (kernel 5.0+)</span>
+        </div>
+        <div class="sysreq-item">
+          <span class="label">RAM</span>
+          <span class="value">2 GB minimum (4 GB recommended)</span>
+        </div>
+        <div class="sysreq-item">
+          <span class="label">Storage</span>
+          <span class="value">100 MB free</span>
+        </div>
+        <div class="sysreq-item">
+          <span class="label">Display</span>
+          <span class="value">1280×720 or higher</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ===== FOOTER ===== -->
   <footer>
-    <p>
-      <strong>diagReifier</strong> · Author | Rubain · © 2026 diagReifier. All rights reserved.<br />
-      <span class="muted">This tool is designed for development assistance. Generated code may require manual review before production use.</span>
-    </p>
-    <p style="margin-top: 0.6rem;">
-      <a href="mailto:diagreifier@proton.me">diagreifier@proton.me</a> · 
-      <a href="https://diagreifier.github.io/privacy/">Privacy Policy</a> · 
-      <a href="https://github.com/diagreifier">GitHub</a>
-    </p>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="brand">
+            <img
+              src="https://raw.githubusercontent.com/diagreifier/diagreifier/main/images/logo260x260.png"
+              alt="diagReifier logo"
+              class="brand-logo-img"
+            />
+            diagReifier
+          </a>
+          <p>AI Engineering platform for building, migrating and debugging mobile applications.</p>
+          <p>Author - Rubain F.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#download">Download</a></li>
+            <li><a href="#requirements">Requirements</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://github.com/diagreifier">GitHub</a></li>
+            <li><a href="https://github.com/diagreifier/diagreifier/releases">Releases</a></li>
+            <li><a href="mailto:diagreifier@proton.me">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="https://diagreifier.github.io/privacy/">Privacy Policy</a></li>
+            <li><a href="https://diagreifier.github.io/terms/">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 diagReifier. All rights reserved.</span>
+        <span class="muted">.</span>
+      </div>
+    </div>
   </footer>
 
 </body>
